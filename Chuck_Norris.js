@@ -52,6 +52,20 @@
 const MESSAGE = readline();
 const str = [...MESSAGE].map(el => el.codePointAt().toString(2).padStart(7, 0)).join('')
 const out = str.match(/0+|1+/g).map( el => el.includes('1') ? '0 ' + ''.padEnd(el.length, 0) : '00 ' + ''.padEnd(el.length, 0) ).join(' ')
-
+    // equal ...match(/(\w)\1*/g)
 console.log(out);
 
+
+//variant #2:
+var origMessage = readline();
+var regex = /(\d)\1*/g;
+var message = origMessage.split('').map(item => {
+    var encoded = item.charCodeAt(0).toString(2);
+    return '0'.repeat(7 - encoded.length) + encoded;
+}).join('');
+
+var encoded = message
+.match(regex)
+.reduce((acc, char) => acc + (char[0] === '0' ? '00 ' : '0 ') + '0'.repeat(char.length) + ' ', '');
+
+print(encoded.trim());
