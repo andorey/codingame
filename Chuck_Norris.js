@@ -69,3 +69,11 @@ var encoded = message
 .reduce((acc, char) => acc + (char[0] === '0' ? '00 ' : '0 ') + '0'.repeat(char.length) + ' ', '');
 
 print(encoded.trim());
+
+
+//variant #3:
+const text = readline();
+const strNum = [...text].map(el => el.codePointAt().toString(2).padStart(7, 0)).join('')
+console.log(
+    strNum.replace( /(1*)(0*)/g, ( _, p1, p2 ) => `${p1 ? `0 ${'0'.repeat(p1.length)}` : ''} ${p2 ? `00 ${p2}` : ''} `).trim()
+);
