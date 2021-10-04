@@ -77,3 +77,25 @@ const strNum = [...text].map(el => el.codePointAt().toString(2).padStart(7, 0)).
 console.log(
     strNum.replace( /(1*)(0*)/g, ( _, p1, p2 ) => `${p1 ? `0 ${'0'.repeat(p1.length)}` : ''} ${p2 ? `00 ${p2}` : ''} `).trim()
 );
+
+
+//variant #4:
+print(
+    readline()
+    // split input into an array of separate characters
+    .split('')
+    // convert each character code to its binary representation
+    .map(c => c.charCodeAt(0).toString(2))
+    // make all strings represent exactly 7 bits by adding leading 0's if necessary
+    .map(s => '0'.repeat(7 - s.length) + s)
+    // combine all strings into a single bit stream
+    .join('')
+    // split the bit stream into groups of 0's and 1's
+    .match(/0+|1+/g)
+    // encode each group by the given rules
+    .map(s => ['00 ', '0 '][s[0]] + '0'.repeat(s.length) + ' ')
+    // combine everything into a single string again
+    .join('')
+    // remove trailing space
+    .trim()
+);
