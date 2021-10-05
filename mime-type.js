@@ -100,3 +100,11 @@ while (numTypes--) {
 while (numFiles--) {
     print(types[readline().toUpperCase().split('.').splice(-2)[1]] || 'UNKNOWN');
 }
+
+
+//variant #4:
+var N = parseInt(readline()); // Number of elements which make up the association table.
+var Q = parseInt(readline()); // Number Q of file names to be analyzed.
+var dic = {};
+[...Array(N)].map(n => {var inf = readline().split(' ');dic[inf[0].toLowerCase()]=inf[1]});
+[...Array(Q)].map(n => {print(dic[(/\.([^.]+)$/.exec(readline())||[0,'0'])[1].toLowerCase()]||'UNKNOWN')});
