@@ -60,7 +60,7 @@ for (let i = 0; i < N; i++) {
 
 for (let i = 0; i < Q; i++) {
     const FNAME = readline().toLowerCase(); // One file name per line.
-    const regRes = FNAME.match(/\.(\w+)$/) || '0'
+    const regRes = FNAME.match(/\.(\w+)$/) || '0'   // better use ...match(/(?<=\.)[^\.]+$/) without [...]
     if (Dic[regRes[1]]){
         console.log(Dic[regRes[1]])
     }else{
@@ -86,3 +86,17 @@ for (var i = 0; i < Q; i++) {
     }
 }
 
+
+//variant #3:
+let numTypes = parseInt(readline());
+let numFiles = parseInt(readline());
+
+let types = {};
+while (numTypes--) {
+    let [ext, type] = readline().split(' ');
+    types[ext.toUpperCase()] = type;
+}
+
+while (numFiles--) {
+    print(types[readline().toUpperCase().split('.').splice(-2)[1]] || 'UNKNOWN');
+}
