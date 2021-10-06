@@ -81,3 +81,88 @@ for (let i = 0; i < N; i++) {
 console.log( out )
 
 
+//variant #2:
+let getFloat = (n) => (parseFloat(n.replace(/\,/, '\.')));
+
+const LON = getFloat(readline());
+const LAT = getFloat(readline());
+const N = parseInt(readline());
+
+let distance = (n) => {
+
+    tLon = getFloat(n[4]);
+    tLat = getFloat(n[5]);
+
+    let x = (tLon - LON) * Math.cos((tLat + LAT) / 2);
+    let y = tLat - LAT;
+    let d = Math.sqrt(x*x + y*y) * 6371;
+
+    return [d, n[1]];
+}
+
+const result = [...Array(N)]
+                .map(() => readline().split(';'))
+                .map(distance)
+                .sort((a, b) => (a[0] - b[0]))
+                    [0][1];
+
+print(result);
+
+
+//variant #3:
+const pow = Math.pow.bind(Math);
+const sqrt = Math.sqrt.bind(Math);
+const dist = (a, b) => sqrt(pow(a[0]-b[0],2) + pow(a[1]-b[1],2));
+
+const p = [0,0].map(x => +readline().replace(",","."));
+
+print(new Array(+readline()).fill()
+    .map(x => readline().split(";"))
+    .map(x => {
+        x = {
+            n: x[1],
+            p: x.splice(-2).map(x=>+x.replace(",","."))
+        };
+        x.d = dist(x.p, p);
+        return x;
+    })
+    .sort((a,b)=>a.d-b.d)
+    .shift().n
+
+);
+
+
+
+//variant #4 (like class):
+class Position {
+    constructor(data) {
+        this.lon = Math.PI * data.shift().replace(',', '.') / 180.0;
+        this.lat = Math.PI * data.shift().replace(',', '.') / 180.0;
+    }
+    distance({ lon, lat }) {
+        const x = (this.lon - lon) * Math.cos((lat + this.lat) / 2);
+        const y = (this.lat - lat);
+        return Math.sqrt(x * x + y * y) * 6371.0;
+    }
+}
+
+const user = new Position([
+    readline(),
+    readline(),
+]);
+
+print(
+    Array(parseInt(readline()))
+        .fill()
+        .map(() => readline().split(';'))
+        .map(data => ({
+            id: data.shift(),
+            name: data.shift(),
+            address: data.shift(),
+            ext: data.shift(),
+            distance: user.distance(new Position(data)),
+        }))
+            .sort((a, b) => a.distance - b.distance)
+            .map(({ name }) => name)
+            .shift()
+);
