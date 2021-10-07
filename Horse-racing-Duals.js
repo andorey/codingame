@@ -29,26 +29,20 @@
 
 //variant #1:
 const N = parseInt(readline());
-let difference = 100;
 const arrHorses = [];
 
 for (let i = 0; i < N; i++) {
-    const pi = parseInt(readline());
-    arrHorses.push(pi)
+    arrHorses.push( parseInt(readline()) )
 }
 
 arrHorses.sort((a, b)=> b - a);
-let first = arrHorses.shift()
-let second = arrHorses.shift()
+let lessDifference = Infinity;
 
-while ( arrHorses.length){
-    if ( first - second < difference){
-        difference = first - second
-    }
-    first = second;
-    second = arrHorses.shift();
+for (let i = 1; i < N; i++){
+    const difference = Math.min(arrHorses[i-1] - arrHorses[i]);
+    lessDifference = Math.min(lessDifference, difference)
 }
 
-console.log(difference)
+console.log(lessDifference)
 
 
