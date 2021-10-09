@@ -85,3 +85,10 @@ console.log([...Array(parseInt(readline()))]
     .sort((a, b) => a - b)
     .reduce((acc, str, idx, arr) => Math.min(acc, str - arr[idx - 1]))
 )
+
+
+
+// variant #6:
+console.log([...Array(+readline())].map(_ => +readline())
+.sort((a, b) => a - b)
+.reduce((p, c, i, a) => i ? Math.min(p, c - a[i - 1]) : p, Infinity));
