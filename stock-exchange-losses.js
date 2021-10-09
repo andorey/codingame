@@ -51,3 +51,46 @@ console.log( out ? out * -1 : 0 )
 
 
 
+//variant #2:
+(z = readline)(m = n = 0)
+z().split(' ').map(v => +v).map(v => v > m ? m = v : n = Math.max(n, m-v))
+sonsole.log(-n)
+
+
+//variant #3:
+const n = parseInt(readline());
+var inputs = readline().split(' ').map((value) => { return parseInt(value); }),
+    maxValue = 0,
+    cntDelta = 0;
+
+/* SLOW METHOD
+for (var i = 0; i < n; i++) {
+
+    for (var j = i + 1; j < n; j++) {
+
+        var value = inputs[j] - inputs[i];
+        if (value < maxValue) { maxValue = value; }
+
+    }
+
+}
+*/
+
+for (var i = 0; i < n; i++) {
+    var value = inputs[i];
+    maxValue = (maxValue > value) ? maxValue : value;
+    cntDelta = (cntDelta < value - maxValue) ? cntDelta : value - maxValue;
+}
+
+console.log(cntDelta);
+
+
+
+//variant #4:
+readline();
+var peak = 0, loss = 0;
+for (var data of readline().split(' ')) {
+    loss = Math.min(loss, data - peak);
+    peak = Math.max(peak, data);
+}
+console.log(loss);
