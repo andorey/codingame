@@ -68,3 +68,62 @@ console.log(
         (acc, el) => acc + Math.abs( el - Y[~~(Y.length/2)] )
         , 0)
 )
+
+
+
+//variant #2:
+var N=parseInt(readline()),x_min=200000,x_max=0,Y=[];
+for(var i=0;i<N;++i){
+    var [x,y]=readline().split(' ').map(e=>parseInt(e));
+    x_min=Math.min(x_min,x);
+    x_max=Math.max(x_max,x);
+    Y[i]=y;
+}
+Y.sort((a,b)=>a>b);
+var median=Y[Math.floor(N/2)],L=0;
+for(var i=0;i<N;++i){
+    L+=Math.abs(median-Y[i]);
+}
+console.log(L+x_max-x_min);
+
+
+
+//variant #3:
+const coors = new Array(parseInt(readline())).fill(0)
+.map(() => readline().split(' ').map(Number));
+const X = coors.map(c => c[0]).sort((a, b) => a - b);
+const Y = coors.map(c => c[1]).sort((a, b) => a - b);
+const median = Y[Y.length >> 1];
+
+console.log(Y.reduce((l, y) => l + Math.abs(y - median), X[X.length - 1] - X[0]));
+
+
+
+//variant #4:
+let minX = Infinity;
+let maxX = -Infinity;
+
+const ys = new Array(parseInt(readline())).fill(0).map(() => {
+    const [x,y] = readline().split(' ').map(Number);
+    minX = Math.min(minX, x);
+    maxX = Math.max(maxX, x);
+    return y;
+});
+
+ys.sort((a, b) => a - b);
+median = ys[Math.floor(ys.length / 2)];
+
+console.log(ys.reduce((s, y) => s + Math.abs(y - median), maxX - minX));
+
+
+
+//variant #5:
+const coodinates = [...Array(+readline())].map(() => readline().split` `.map(Number));
+const xs = coodinates.map(c => c[0]);
+const ys = coodinates.map(c => c[1]).sort((a, b) => a - b);
+
+console.log(
+    Math.max(...xs) - Math.min(...xs) + ys.reduce(
+        (l,c) => l + Math.abs(c - ys[ys.length / 2 | 0]), 0
+    )
+);
