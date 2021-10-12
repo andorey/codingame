@@ -108,3 +108,88 @@ while(valid(s)) {
 }
 
 console.log(s);
+
+
+
+//variant #3:
+let s = readline();
+while (s.length % 2 < 1 && !s.match(/(\d)\1{3}/) && (groups = s.match(/\d\d/g))) {
+    const next = groups.map(g => g[1].repeat(+g[0])).join('');
+    if (next === s) break;
+    s = next;
+}
+console.log(s);
+
+
+
+//variant #4:
+const s = readline();
+
+const reverse = (s) => {
+    console.error(s)
+    let ns = '', lastWhat = ''
+    for (let i=0; i<s.length-1; i+=2){
+        let how = s[i], what= s[i+1]
+        if (lastWhat == what) return s;
+        ns += what.repeat(+how)
+        lastWhat = what
+    }
+    if (ns == s || ns.length%2 == 1) return ns
+    return reverse(ns)
+}
+
+console.log(reverse(s))
+
+
+
+//variant #5:
+let s = [...readline()];
+let res = s.join("")
+let nextRes = ""
+while(true) {
+    nextRes = compute([...res])
+    if(nextRes === res) {
+        break
+    }
+    if(reverse(nextRes) === res) {
+        res = nextRes
+    }
+    else {
+        break;
+    }
+}
+
+function compute(s) {
+    let res = ""
+    while(s.length >= 2) {
+        const count = s.shift()
+        const digit = s.shift()
+        res += Array(+count).fill(+digit).join("")
+    }
+    return res
+}
+
+function reverse(res) {
+    let digit = res[0]
+    let count = 1
+    let result = ""
+    if(res.length === 1) {
+        return `${count}${digit}`
+    }
+    for(let i = 1; i < res.length; i++) {
+        if(digit === res[i]) {
+            count++
+        }
+        else {
+            result += `${count}${digit}`
+            count = 1
+            digit = res[i]
+        }
+        if(i === res.length -1) {
+            result += `${count}${digit}`
+        }
+    }
+    return result
+}
+
+console.log(res)
