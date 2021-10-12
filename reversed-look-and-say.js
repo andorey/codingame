@@ -85,3 +85,26 @@ function say(s){
 }
 
 console.log(say(s))
+
+
+
+//variant #2:
+let s = readline();
+
+function valid(str) {
+    return (str.length % 2 == 0) && !(str.match(/^(?:.{2})*\d(\d)\d\1/));
+}
+
+while(valid(s)) {
+    let ret = "";
+    for(let i = 0; i < s.length; i += 2)
+    {
+        let chunk = s.slice(i, i + 2);
+        ret += chunk[1].repeat(parseInt(chunk[0]));
+    }
+
+    if(s == ret) break;
+    s = ret;
+}
+
+console.log(s);
