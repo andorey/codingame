@@ -86,7 +86,7 @@ console.log(s);
 //variant #5:
 const n = parseInt(readline());
 
-let sum = 1, current = 1,i=1, side = n+1    //1 is always present at a start,
+let sum = 1, current = 1, i=1, side = n+1   //1 is always present at a start,
                                             //current is the last seen number, i is the iteration
                                             //side is a spiral side which grades as n+1; n-1; n-3; etc. every 4 iterations
 while(current < n**2){
