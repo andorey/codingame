@@ -36,3 +36,88 @@ for(let t = 0; t * 5 <= N; t++){
 
 
 
+//variant #2:
+const score = parseInt(readline());
+
+let essai= 0
+let trans = 0
+let penalty = score - (essai * 5 + trans *2 )
+
+const checkInUp = (p) =>{
+    p= score - (essai * 5 + trans *2 )
+    if(p % 3 ===0 && p >=0){
+        return console.log(essai, trans, p /3)
+    }
+}
+checkInUp(penalty)
+while(essai * 5 < score){
+    essai ++
+    trans = 0
+    checkInUp(penalty)
+    for(let i = 0; i < essai; i ++){
+        trans ++
+        checkInUp(penalty)
+    }
+}
+
+
+
+//variant #3:
+const N = Number(readline());
+
+for (let tries = 0; 5 * tries <= N; ++tries) {
+    for (let kicks = 0; kicks <= tries; ++kicks) {
+        const penalties = (N - 5 * tries - 2 * kicks) / 3;
+        if (penalties >= 0 && Number.isInteger(penalties))
+            console.log(tries, kicks, penalties);
+    }
+}
+
+
+
+//variant #4:
+let solvePenalties = (n) => n % 3 === 0 ? n / 3 : -1;
+
+let solveTransformations = (n, m) => [...Array(m + 1)]
+.map((_, i) => [i, solvePenalties(n - 2 * i)])
+.filter(r => r[1] >= 0);
+
+let solveTries = (n) => [...Array(1 + Math.floor(n / 5))]
+.map((_, i) => solveTransformations(n - 5 * i, i).map(r => [i, r[0], r[1]]));
+
+console.log(solveTries(+readline()).flat().map(r => `${r[0]} ${r[1]} ${r[2]}`).join('\n'));
+
+
+
+//variant #5:
+const N = +readline();
+
+for (let tries = 0; tries * 5 <= N; tries++) {
+    for (let kicks = 0; kicks * 2 + tries * 5 <= N && kicks <= tries; kicks++) {
+        if ((N - tries * 5 - kicks * 2) % 3 === 0) {
+            console.log(tries, kicks, (N - tries * 5 - kicks * 2) / 3);
+        }
+    }
+}
+
+
+
+//variant #6:
+for(N = readline()|0, a=0; 5*a <= N; a++){
+    for(b=0; b <= a && 5*a + 2*b <= N; b++){
+        if( c = (N - 5*a - 2*b)/3, c === (c|0) ) console.log([a,b,c].join(' '))
+    }
+}
+
+
+
+//variant #7:
+const N = parseInt(readline());
+
+for (let i = 0; i <= N / 5; i++) {
+    for (let j = 0; j <= i; j++) {
+        for (let k = 0; k <= N / 3; k++) {
+            if (i * 5 + j * 2 + k * 3 === N) console.log([i, j, k].join(' '))
+        }
+    }
+}
