@@ -62,7 +62,100 @@ console.log(
 var D = Infinity, horses = [], N = +readline()
 for (let ii = 0; ii < N; ii++) {
     const [ Vi, Ei ] = readline().split(' ')
-    for (const {Vj, Ej} of horses) D = Math.min(D, Math.abs(Vj-Vi) + Math.abs(Ej-Ei))
+    for (const {Vj, Ej} of horses) {
+        D = Math.min(D, Math.abs(Vj-Vi) + Math.abs(Ej-Ei))
+    }
     horses.push({Vj: Vi, Ej: Ei})
 }
 console.log(D)
+
+
+
+//variant #3:
+const parseHorse = () => readline().split(' ').map(Number)
+const n = parseInt(readline());
+const horses = []
+
+for(let i = 0; i < n; i++) {
+    horses.push( parseHorse() )
+}
+
+let min = Infinity
+for(let i = 0; i < n; i++){
+    for(let j = 0; j < n; j++){
+        if (i !== j){
+            const [ h1, h2 ] = [ horses[i], horses[j] ]
+            const v = Math.abs(h1[0] - h2[0]) + Math.abs(h1[1] - h2[1])
+            min = Math.min(min, v)
+        }
+    }
+}
+console.log(min)
+
+
+
+//variant #4:
+class Vector {
+    constructor(a, b) {
+        this.a = a;
+        this.b = b;
+    }
+
+    distance(v2) {
+        return Math.abs(v2.a - this.a) + Math.abs(v2.b - this.b);
+    }
+
+}
+
+const N = parseInt(readline());
+const horses = [];
+for (let i = 0; i < N; i++) {
+    var inputs = readline().split(' ');
+    const V = parseInt(inputs[0]);
+    const E = parseInt(inputs[1]);
+    horses.push(new Vector(V, E));
+}
+
+const distances = [];
+for (let k = 0; k <= horses.length; k += 1) {
+    for (let j = k + 1; j < horses.length; j += 1) {
+        distances.push(horses[k].distance(horses[j]))
+    }
+}
+
+console.log(distances.reduce((acc, d) => acc > d ? d : acc))
+
+
+
+//variant #5:
+const n = parseInt(readline());
+
+let v = [];
+let e = [];
+
+for (let i = 0; i < n; i++) {
+    let inputs = readline().split(' ');
+    v.push(parseInt(inputs[0]));
+    e.push(parseInt(inputs[1]));
+}
+
+let min = -1;
+
+for (let i = 0; i < n - 1; i++) {
+    for (let j = i + 1; j < n; j++) {
+        let dist = Math.abs(v[i] - v[j]) + Math.abs(e[i] - e[j]);
+        if ((min === -1) || (dist < min)) {
+            min = dist;
+        }
+    }
+}
+
+console.log(min);
+
+
+
+//variant #6:
+console.log([...Array(+readline())]
+.map(_ => readline().split(' ').map(Number))
+.map((c1, i1, a) => a.reduce((p, c2, i2) => i1 === i2 ? p : Math.min(p, Math.abs(c2[0] - c1[0]) + Math.abs(c2[1] - c1[1])), Infinity))
+.reduce((p, c) => Math.min(p, c), Infinity));
