@@ -41,7 +41,35 @@ while ( true ){
 
 //variant #2:
 while (true){
-    print([...Array(8)]
+    console.log([...Array(8)]
     .map(n => parseInt(readline()))
     .reduce((p, c, i, a) => c > a[p] ? i : p, 0));
+}
+
+
+
+//variant #3:
+let read = () => Array(8).fill().map((_,i) => [readline(), i])
+
+while (true) {
+    const mountains = read()
+    const highestPointIdx = mountains.sort().pop().pop()
+    console.log(highestPointIdx)
+}
+
+
+
+//variant #4:
+while (true) {
+    let max = -0;
+    let result = -0;
+
+    for ( let i = 0; i < 8; i++){
+        const mountainH = +readline();
+        if ( mountainH >= max ){
+            max = mountainH;
+            result = i;
+        }
+    }
+    console.log(result);
 }
