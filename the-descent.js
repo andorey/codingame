@@ -73,3 +73,17 @@ while (true) {
     }
     console.log(result);
 }
+
+
+
+//variant #5:
+while ( true ) {
+    let a = [];
+    for ( let i = 0; i < 8; i++ ) {
+        let mountainH = parseInt(readline());
+        a.push({h:mountainH, i:i});
+    }
+
+    a.sort( (a, b)=> b.h - a.h );
+    console.log(a[0].i);
+}
