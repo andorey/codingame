@@ -77,3 +77,45 @@ for (let i = 0; i < V; i++) {
 }
 
 console.log(Math.max(...robbers));
+
+
+
+//variant #4:
+const robbers = +readline();
+var vaults = [...new Array(+readline())]
+.map(_ => readline().split(' ').filter(c => c !== '')
+.reduce((p, c, i) => i < 1 ? +c : Math.pow(10, +c) * Math.pow(5, p - +c), 0));
+
+var time = 0;
+while (vaults.length > 0) {
+    let openings = Math.min(robbers, vaults.length);
+    let openTime = vaults.slice(0, openings).reduce((p, v) => Math.min(p, v), Number.POSITIVE_INFINITY);
+    time += openTime;
+    vaults = vaults.map((v, i) => i < openings ? v - openTime : v).filter(v => v > 0);
+}
+console.log(time);
+
+
+
+//variant #5:
+let robbers = [...Array(+readline())].map(_=>0)
+const vaults = [...Array(+readline())].map(_=>readline())
+vaults.forEach(vault=>{
+    [chars, nums] = vault.split(' ');
+    let time = [...Array(+chars)].map((_,i)=>i>=nums?5:10).reduce((a,b)=>a*b)
+    robbers = robbers.sort((a,b)=>a-b)
+    robbers[0] += time
+})
+console.log(Math.max(...robbers))
+
+
+
+//variant #6:
+const R = Array.from({length: readline()}, () => 0);
+
+Array.from({length: readline()}, () => {
+    const [C, N] = readline().split(' ').map(x => +x);
+    R[R.indexOf(Math.min(...R))] += Math.pow(10, N) * Math.pow(5, C - N);
+});
+
+print(Math.max(...R));
